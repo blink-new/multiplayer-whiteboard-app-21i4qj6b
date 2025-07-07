@@ -186,7 +186,9 @@ export default function Whiteboard({ user }: WhiteboardProps) {
     
     // Send to other users
     if (channelRef.current) {
-      await channelRef.current.publish('whiteboard-room', 'draw', drawingData)
+      await channelRef.current.publish('draw', drawingData, {
+        userId: user.id,
+      })
     }
     setCurrentStroke([])
   }
@@ -230,7 +232,7 @@ export default function Whiteboard({ user }: WhiteboardProps) {
     
     clearCanvas()
     if (channelRef.current) {
-      await channelRef.current.publish('whiteboard-room', 'clear', {})
+      await channelRef.current.publish('clear', {}, { userId: user.id })
     }
     toast.success('Canvas cleared')
   }
